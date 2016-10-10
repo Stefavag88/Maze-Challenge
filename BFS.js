@@ -1,6 +1,7 @@
 "use strict"
-var selection = process.argv[2];
-var matrixList = require('./matrixes.js');
+var input = process.argv[2];
+var reader = require('./reader.js');
+var matrix = reader(input);
 var start, end, current, matrix, coordinates;
 var unvisited =[];
 var nodes = [];
@@ -8,19 +9,8 @@ var adjacents = [];
 var path = [];
 var maxDistance = 0;
 
-// take input from the command line, which can be 1,2 or 3.
-switch(selection){
-    case '1':
-        matrix = matrixList[0];
-        break;
-    case '2':
-        matrix = matrixList[1];
-        break;
-    case '3':
-        matrix = matrixList[2];
-}
-
-// console.log(matrix);
+console.log( matrix );
+console.log("\n");
 
 // constructor function for the Square Class.
 function Square(i,j,walkable){
@@ -32,26 +22,25 @@ function Square(i,j,walkable){
 }
 
 // The Breadth-First-Algorithm.
-function B_F_S(matrix){
+function B_F_S(maze){
 
     // Every element of the matrix is mapped to an instance of the Square Class.
     for ( var i in matrix){
 	    for (var j in matrix[i]){
 
-            if (matrix[i][j] === 's'){
+            if (matrix[i][j] === 'S'){
                 matrix[i][j] = new Square(i,j,true);
                 start = matrix[i][j];  
-            }else if( matrix[i][j] === 'e'){
+            }else if( matrix[i][j] === 'G'){
                 matrix[i][j] = new Square(i,j,true);
                 end = matrix[i][j];  
-            }else if (matrix[i][j] === 0){
+            }else if (matrix[i][j] === '_'){
                 matrix[i][j] = new Square(i,j,true);
             }else{
                 matrix[i][j] = new Square(i,j,false)
             }
 
             unvisited.push(matrix[i][j]);   // This is the array of unvisited squares.
-        
         }
     }
 
@@ -72,12 +61,12 @@ function B_F_S(matrix){
 
         // console.log(adjacents);
 
-        for(var k of adjacents){
-            if (k.distance === Infinity){
-                k.distance = current.distance + 1;
-                k.parent = current;
-                nodes.push(k);
-                //console.log(nodes);
+        for(var adj of adjacents){
+            if (adj.distance === Infinity){
+                adj.distance = current.distance + 1;
+                adj.parent = current;
+                nodes.push(adj);
+                console.log(nodes);
             }
         }
         // Gets the optimal Distance.
@@ -98,12 +87,12 @@ function B_F_S(matrix){
                 }
             }
         }
-    } 
+    };
 
     // console.log(maxDistance);
     path.splice(maxDistance); 
 
     console.log(`Path is (${start.x},${start.y}) --> ${path.join(" --> ")}`);
-}
+};
 
 B_F_S(matrix);
