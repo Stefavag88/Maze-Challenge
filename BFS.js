@@ -66,7 +66,6 @@ function B_F_S(maze){
                 adj.distance = current.distance + 1;
                 adj.parent = current;
                 nodes.push(adj);
-                console.log(nodes);
             }
         }
         // Gets the optimal Distance.
@@ -84,6 +83,7 @@ function B_F_S(maze){
                     coordinates = `(${node.x},${node.y})`;
                     path.unshift(coordinates);
                     node = node.parent;
+                    console.log(nodes);
                 }
             }
         }
