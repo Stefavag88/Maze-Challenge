@@ -58,7 +58,7 @@ function B_F_S(maze){
 
         current = nodes.shift();
         adjacents = unvisited.filter(eucleiDistanceUnblocked); 
-
+        
         // console.log(adjacents);
 
         for(var adj of adjacents){
@@ -83,7 +83,7 @@ function B_F_S(maze){
                     coordinates = `(${node.x},${node.y})`;
                     path.unshift(coordinates);
                     node = node.parent;
-                    console.log(nodes);
+                    // console.log(nodes);
                 }
             }
         }
